@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+      }
+
+      .cls-2 {
+        fill: #d8d8d8;
+      }
+    </style>
+  </defs>
+  <g id="撤销2" transform="translate(-96 -704)">
+    <g id="全屏" transform="translate(-872 636)">
+      <path id="路径_57" data-name="路径 57" class="cls-1" d="M20,0A20,20,0,1,1,0,20,20,20,0,0,1,20,0Z" transform="translate(968 68)"/>
+    </g>
+    <path id="路径_56" data-name="路径 56" class="cls-2" d="M6,4H17.5L15.3,1.8a.967.967,0,0,1,0-1.4.967.967,0,0,1,1.4,0l3.9,4a.967.967,0,0,1,0,1.4L16.7,9.7a.967.967,0,0,1-1.4,0,.967.967,0,0,1,0-1.4L17.5,6H6a4,4,0,0,0,0,8h8a1,1,0,0,1,0,2H6A6,6,0,0,1,6,4Z" transform="translate(106 715.9)"/>
+  </g>
+</svg>
