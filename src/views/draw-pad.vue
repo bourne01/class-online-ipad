@@ -67,17 +67,18 @@ export default {
         padding:px2rem(32px);
         padding-top:0;
     }
-    header{
+    .draw-pad header{
         margin-bottom:px2rem(32px);
+        position:static;
     }
-    section{
+    .draw-pad section{
         margin-bottom: px2rem(32px);
         width:px2rem(1840px);
         height:px2rem(1056px);
         background-color:#D5DBE5;
         border-radius: 4px;
     }
-    footer{
+    .draw-pad footer{
         display:flex;
         overflow-x: scroll;
         width:px2rem(1840px);

@@ -41,9 +41,11 @@ export default {
     .shapes{
         margin-left:px2rem(118px);
         display: flex;
-        height:px2rem(140px);
-        line-height:px2rem(140px);
+        /* height:px2rem(140px);
+        line-height:px2rem(140px); */
         align-items: center;
+        border-radius: 4px;
+        border:1px solid #D8D8D8;
     }
     .shapes img{
         width:px2rem(64px);

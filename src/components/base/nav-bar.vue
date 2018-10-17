@@ -7,7 +7,8 @@
                 :class="{active:activeIndex==idx}">                   
                 <!-- <img src="../../assets/home/home.png" alt=""> -->
                 <img :src="activeImgs[idx]" alt="" v-if="activeIndex==idx">                   
-                <img :src="img" alt="" v-else>                   
+                <img :src="img" alt="" v-else>
+                <span>{{iconNames[idx]}}</span>
             </li>
             <li>
                 <img :src="require('../../assets/svg/camera.svg')" alt="">
@@ -31,6 +32,7 @@ export default {
                 require('../../assets/svg/question-active.svg'),
                 require('../../assets/svg/counting-active.svg')
             ],
+            iconNames:[,'课程','画笔','测试题','统计','学生管理'],
             activeIndex:0,//默认激活图标，首页
         }
     },
@@ -87,10 +89,22 @@ export default {
         height: px2rem(64px);
     }
     li{
-        height:px2rem(160px);
+        height:px2rem(180px);
         width:100%;
         text-align: center;
-        line-height:px2rem(160px);
+        /* line-height:px2rem(160px); */
+        display:flex;
+        align-items: center;
+        flex-direction: column;
+        padding-top:px2rem(20px);
+        box-sizing: border-box;
+    }
+    li>span{
+        font-size:px2rem(24px);
+        color:#8F8F8F;
+    }
+    li:first-child{
+        padding-top:px2rem(50px);
     }
     li:last-child{
         position: fixed;
@@ -99,5 +113,8 @@ export default {
     }
     .active{
         background-color:#333333;
+    }
+    .active span{
+        color:#fff;
     }
 </style>
