@@ -93,14 +93,14 @@ export default {
 }); */
 		})
 		svg.touchmove((e)=>{
-			console.log('touch move');
+			/* console.log('touch move');
 			let tmpPoint = this.getTouchPosition(e.changedTouches[0]);
 			svg.paper.line(this.startPoint.x,this.startPoint.y,tmpPoint.x,tmpPoint.y).attr({
 				stroke: "#000",
 				strokeWidth: 5	
 			}); 
 			this.startPoint = tmpPoint; 
-			console.log(tmpPoint);
+			console.log(tmpPoint); */
 		})
 		/* var c = svg.paper.path("M10 10L100 100").attr({
 			stroke: "#000",
