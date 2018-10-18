@@ -1,0 +1,15 @@
+<svg id="开" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28.1 16">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #22cb64;
+      }
+
+      .cls-2 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <path id="路径_72" data-name="路径 72" class="cls-1" d="M20.1,16H8A8.024,8.024,0,0,1,0,8H0A8.024,8.024,0,0,1,8,0H20.1a8.024,8.024,0,0,1,8,8h0A8.024,8.024,0,0,1,20.1,16Z"/>
+  <circle id="椭圆_6" data-name="椭圆 6" class="cls-2" cx="7" cy="7" r="7" transform="translate(13.1 1)"/>
+</svg>

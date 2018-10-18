@@ -1,7 +1,7 @@
 {
-  "name": "dean-office-teacher-mobile",
+  "name": "class-online-ipad",
   "version": "1.0.0",
-  "description": "It is a dean office system for Wenzhou high  and elementray school",
+  "description": "It is online lessson system for ouhai high  and elementray school",
   "author": "Bourne",
   "private": true,
   "scripts": {

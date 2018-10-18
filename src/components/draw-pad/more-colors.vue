@@ -1,7 +1,7 @@
 <template>
     <article class="more-color">
         <div class="color-wrapper"
-            v-for="idx in 10" :key="idx"            
+            v-for="idx in 11" :key="idx"            
             :class="{active:imgIndex==idx}"
             @click="onClick(idx)">
             <div class="color"
@@ -16,6 +16,7 @@
                     color8:idx==8,
                     color9:idx==9,
                     color10:idx==10,
+                    color11:idx==11,
                 }"></div>
         </div>
     </article>
@@ -95,6 +96,10 @@ export default {
     } 
     .color10{
         background-color:#A349A4;
+    } 
+    .color11{
+        background-color:#fff;
+        border:1px solid #E2E2E2;
     } 
     .active{
         background-color:#f1f1f1;

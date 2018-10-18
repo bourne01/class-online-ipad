@@ -1,11 +1,11 @@
 <template>
     <section class="shapes">
-        <img :src="require('../../assets/svg/isosceles.svg')" alt="">
+        <img :src="require('../../assets/svg/line.svg')" alt="">
         <img :src="require('../../assets/svg/curve.svg')" alt="">
         <img :src="require('../../assets/svg/ellipse.svg')" alt="">
         <img :src="require('../../assets/svg/rect.svg')" alt="">
         <div>
-            <img :src="require('../../assets/svg/isosceles.svg')" alt="" 
+            <img :src="require('../../assets/svg/caret.svg')" alt="" 
                 @click.stop="isMoreShapes=!isMoreShapes">
             <more-shapes v-if="isMoreShapes"></more-shapes>
         </div>

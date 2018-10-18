@@ -23,14 +23,18 @@ export default {
         return{
             defaultImgs:[
                 require('../../assets/svg/home.svg'),
+                require('../../assets/svg/course.svg'),
                 require('../../assets/svg/pencil.svg'),
                 require('../../assets/svg/question.svg'),
-                require('../../assets/svg/counting.svg')],
+                require('../../assets/svg/counting.svg'),
+                require('../../assets/svg/student.svg')],
             activeImgs:[
                 require('../../assets/svg/home-active.svg'),
+                require('../../assets/svg/course-active.svg'),
                 require('../../assets/svg/pencil-active.svg'),
                 require('../../assets/svg/question-active.svg'),
-                require('../../assets/svg/counting-active.svg')
+                require('../../assets/svg/counting-active.svg'),
+                require('../../assets/svg/student-active.svg')
             ],
             iconNames:[,'课程','画笔','测试题','统计','学生管理'],
             activeIndex:0,//默认激活图标，首页
@@ -50,13 +54,19 @@ export default {
                     this.$router.push('/home');
                     break;
                 case 1:
-                    this.$router.push('/home/draw-pad');
+                    this.$router.push('/home/course');
                     break;
                 case 2:
-                    this.$router.push('/home/question');
+                    this.$router.push('/home/draw-pad');
                     break;
                 case 3:
+                    this.$router.push('/home/question');
+                    break;
+                case 4:
                     this.$router.push('/home/counting');
+                    break;
+                case 5:
+                    this.$router.push('/home/student-manage');
                     break;
                 default:
                     this.$msgbox('发生错误','未知类型的跳转',1000);

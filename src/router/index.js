@@ -18,7 +18,27 @@ export default new VueRouter({
 					path:'draw-pad',
 					name:'DrawPad',
 					component:() => import('../views/draw-pad.vue')
-				}
+				},
+				{
+					path:'course',
+					name:'Course',
+					component:() => import('../views/course.vue')
+				},
+				{
+					path:'question',
+					name:'Question',
+					component:() => import('../views/question.vue')
+				},
+				{
+					path:'counting',
+					name:'Counting',
+					component:() => import('../views/counting.vue')
+				},
+				{
+					path:'student-manage',
+					name:'Student',
+					component:() => import('../views/student-manage.vue')
+				},
 			]
 		},			
 		{

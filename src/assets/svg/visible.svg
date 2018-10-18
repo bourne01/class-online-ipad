@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #8f8f8f;
+      }
+
+      .cls-2 {
+        fill: none;
+      }
+    </style>
+  </defs>
+  <g id="可见" transform="translate(-306 -717)">
+    <g id="组_66" data-name="组 66" transform="translate(308 722)">
+      <g id="组_64" data-name="组 64">
+        <path id="路径_84" data-name="路径 84" class="cls-1" d="M5.9,5.3C3,5.3,0,4.4,0,2.7S3,0,5.9,0s5.9.9,5.9,2.7S8.8,5.3,5.9,5.3ZM5.9,1C2.9,1,1,2,1,2.7S2.9,4.4,5.9,4.4s4.9-1,4.9-1.7S8.9,1,5.9,1Z"/>
+      </g>
+      <g id="组_65" data-name="组 65">
+        <circle id="椭圆_8" data-name="椭圆 8" class="cls-1" cx="1.1" cy="1.1" r="1.1" transform="translate(4.8 1.6)"/>
+      </g>
+    </g>
+    <rect id="矩形_36" data-name="矩形 36" class="cls-2" width="16" height="16" transform="translate(306 717)"/>
+  </g>
+</svg>

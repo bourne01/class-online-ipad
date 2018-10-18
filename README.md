@@ -1,4 +1,4 @@
-# course-selection-mobile
+# online-class-ipad
 
 > It is a project for high  and elementray school
 

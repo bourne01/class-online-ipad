@@ -6,9 +6,9 @@
         <section>
             <svg id="draw-erea"></svg>
         </section>
-        <footer>
+        <!-- <footer>
             <div class="preview" v-for="idx in 15" :key="idx">{{idx}}</div>
-        </footer>
+        </footer> -->
     </article>
 </template>
 
@@ -68,23 +68,23 @@ export default {
         padding-top:0;
     }
     .draw-pad header{
-        margin-bottom:px2rem(32px);
+        margin-bottom:px2rem(30px);
         position:static;
     }
     .draw-pad section{
-        margin-bottom: px2rem(32px);
+        /* margin-bottom: px2rem(32px); */
         width:px2rem(1840px);
-        height:px2rem(1056px);
+        height:px2rem(1334px);
         background-color:#D5DBE5;
         border-radius: 4px;
     }
-    .draw-pad footer{
+    /* .draw-pad footer{
         display:flex;
         overflow-x: scroll;
         width:px2rem(1840px);
         flex-wrap: nowrap;
         min-width:0
-    }
+    } */
     .preview{
         flex:0 0 px2rem(384px);
         /* width:px2rem(384px);         */
