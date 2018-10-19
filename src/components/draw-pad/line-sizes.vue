@@ -31,6 +31,7 @@ export default {
          */
         onClick(index){
             this.lineIndex = index;
+            this.$root.bus.$emit('size',this.lineSizes[index])
         }
     }
 }
@@ -48,6 +49,7 @@ export default {
         position: absolute;
         top:px2rem(70px);
         background-color:#fff;
+        z-index: 100001;
     }
     li{
         padding:0 px2rem(32px);

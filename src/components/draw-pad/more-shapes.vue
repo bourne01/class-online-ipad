@@ -25,17 +25,25 @@ export default {
                 require('../../assets/svg/arrow 45 degree.svg'),
                 require('../../assets/svg/diamond.svg'),
             ],
-            imgIndex:0,//默认1px粗细
+            shapes:[
+                'curve','ellipse','rect','round-rect','isosceles',
+                'right-angled-triangle','arrow-up','arrow-down',
+                'arrow-45-degree','diamond'],
+            actIndex:0,//默认
         }
     },
-    methods:{
-        /**@function 监听点击线条粗细图标，选择相应的粗细线条
-         * @param {线条粗细对应的下标} index
+    methods:{        
+        /**
+         * @function 监听点击形状
+         * @param {形状名称} name
+         * @param {形状名称所在数组的下标} index
          */
         onClick(index){
             this.imgIndex = index;
-            console.log(index);
-        }
+            this.shapeName = this.shapes[index];
+            this.actIndex = index;
+            this.$root.bus.$emit('shape',this.shapeName);
+        },
     }
 }
 </script>
@@ -55,6 +63,7 @@ export default {
         display: flex;
         flex-wrap: wrap;
         width:px2rem(224px);
+        z-index: 100001;
     }   
     .more-shapes>span{
         line-height:px2rem(64px);

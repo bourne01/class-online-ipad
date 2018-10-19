@@ -5,7 +5,9 @@
                 @click.stop="isMoreColors=!isMoreColors">
             <more-colors v-if="isMoreColors"></more-colors>
         </div>        
-        <img :src="require('../../assets/draw-pad/white.png')" alt="">
+        <div class="current-color-wrapper">
+            <div class="current-color" :style="{background:activeColor}"></div>
+        </div>
     </section>
 </template>
 
@@ -18,9 +20,13 @@ export default {
     data(){
         return{
             isMoreColors:false,
+            activeColor:'#fff'
         }
     },
     mounted(){
+        this.$root.bus.$on('color',(color) => {
+            this.activeColor = color;
+        })
         this.$root.bus.$on('close-pop',() => {
             this.isMoreColors = false;
         })
@@ -47,5 +53,18 @@ export default {
         width:px2rem(64px);
         height:px2rem(64px);
         margin-right:px2rem(32px);
+    }
+    .current-color-wrapper{
+        padding:px2rem(14px);
+        border:1px solid #E2E2E2;
+        box-sizing:border-box;
+        border-radius: 2px;
+    }
+    .current-color{
+        width:px2rem(32px);
+        height:px2rem(32px);  
+        border-radius:2px; 
+        border:1px solid #E2E2E2;
+        box-sizing:border-box;
     }
 </style>

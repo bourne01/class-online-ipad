@@ -9,7 +9,7 @@
                 <tab-item  selected @on-item-click="onTabClick">题库里选题</tab-item>
                 <tab-item @on-item-click="onTabClick">自定义题目</tab-item>
             </tab>
-            <img src="../../assets/svg/off.svg" alt="" class="close" @click="onClick('close')">
+            <img src="../../assets/question/close.png" alt="" class="close" @click="onClick('close')">
         </header>
         <div class="questions-in-bank" v-if="actIndex==0">
             <div class="question-list">
@@ -117,8 +117,8 @@ export default {
         position: static;
     }
     .question .close{
-        width:px2rem(68px);
-        height:px2rem(68px);
+        width:px2rem(34px);
+        height:px2rem(34px);
         align-self:center;
         margin-right:px2rem(52px);
     }

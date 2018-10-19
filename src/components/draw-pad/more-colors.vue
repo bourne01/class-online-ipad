@@ -1,22 +1,22 @@
 <template>
     <article class="more-color">
         <div class="color-wrapper"
-            v-for="idx in 11" :key="idx"            
+            v-for="(color,idx) in colors" :key="idx"            
             :class="{active:imgIndex==idx}"
-            @click="onClick(idx)">
+            @click.stop="onClick(idx)">
             <div class="color"
                 :class="{
-                    color1:idx==1,
-                    color2:idx==2,
-                    color3:idx==3,
-                    color4:idx==4,
-                    color5:idx==5,
-                    color6:idx==6,
-                    color7:idx==7,
-                    color8:idx==8,
-                    color9:idx==9,
-                    color10:idx==10,
-                    color11:idx==11,
+                    color1:idx==0,
+                    color2:idx==1,
+                    color3:idx==2,
+                    color4:idx==3,
+                    color5:idx==4,
+                    color6:idx==5,
+                    color7:idx==6,
+                    color8:idx==7,
+                    color9:idx==8,
+                    color10:idx==9,
+                    color11:idx==10,
                 }"></div>
         </div>
     </article>
@@ -26,8 +26,12 @@
 export default {
     data(){
         return{
-            
-            imgIndex:0,//默认1px粗细
+            colors:[
+                '#000','#7F7F7F','#880015','#ED1C24',
+                '#FF7F27','#FFF200','#22B14C','#00A2E8',
+                '#3F48CC','#A349A4','#ff',
+            ],
+            activeColor:'',//被选择的颜色
         }
     },
     methods:{
@@ -35,8 +39,9 @@ export default {
          * @param {线条粗细对应的下标} index
          */
         onClick(index){
-            this.imgIndex = index;
-            console.log(index);
+            console.log(this.colors[index])
+            this.$root.bus.$emit('color',this.colors[index]);
+            this.$root.bus.$emit('close-pop');
         }
     },    
 }
@@ -58,6 +63,7 @@ export default {
         flex-wrap: wrap;
         width:px2rem(294px);
         box-sizing:border-box;
+        z-index: 100002;
     }       
     .color-wrapper{
         padding:px2rem(16px);
