@@ -32,94 +32,19 @@ export default {
 		}
 	},
 	methods:{
-		/* getMousePos(event) {
-			var e = event || window.event;
-			var scrollX = document.documentElement.scrollLeft || document.body.scrollLeft;
-			var scrollY = document.documentElement.scrollTop || document.body.scrollTop;
-			var x = e.pageX || e.clientX + scrollX;
-			var y = e.pageY || e.clientY + scrollY;
-			return { 'x': x, 'y': y };
-			}, */
-		getTouchPosition(point){
-			return {x:point.clientX,y:point.clientY}
+		gotStream(stream){
+			video.src =URL.createObjectURL(stream);
+			video.onerror= function(){stream.stop();}
+			stream.onended = noStream;
+			video.onloadedmetadata =function(){alert("成功打开摄像头")};
 		},
-		onShapeClick(type,e){
-			this.type = type;
-			console.log(type);
-			console.log(e);
-		}
-	},
-	mounted(){
-		let svg = Snap('#svg');
-		/* let circle = svg.paper.circle(150, 150, 100);
-		console.log(circle.getBBox()); */
-		//let ret = svg.paper.rect(50,50,200,200);
-		let ret = svg.paper.circle(150, 150, 100)
-		//console.log(ret.getBBox());
-		ret.attr('stroke','blue' );
-		ret.attr('stroke-width','3px' );
-		ret.attr('fill','transparent' );
-		//ret.attr(/* fill:'red',fillOpacity:0.2, */'stroke-dasharray','15,10')
-		svg.touchstart((e)=>{	
-			console.log('touch start');	
-			//console.log(e.touches[0]);	
-			//console.log('hi touch start')
-			//console.log(this.getMousePos(e));
-			this.startPoint = this.getTouchPosition(e.touches[0])
-			//console.log(this.startPoint.x);
-			/* console.table(this.startPoint.x);
-			console.table(this.startPoint.y); */
-		})
-		svg.touchend((e)=>{
-			console.log('touch end');
-			//console.log(e)
-			//ret.attr('width','500px')
-			//ret.animate({r:50},500);
-			//console.log(e.changedTouches[0]);
-			//let endPoint = this.getTouchPosition(e.changedTouches[0]);
-			//let radius = Math.sqrt((endPoint.x-this.startPoint.x)*(endPoint.x-this.startPoint.x)+(endPoint.y-this.startPoint.y)*(endPoint.y-this.startPoint.y));
-			//console.log(radius);
-			//svg.paper.circle(this.startPoint.x,this.startPoint.y,radius)
-			//console.log(this.startPoint);
-			//console.log(endPoint);
-			/* svg.paper.line(this.startPoint.x,this.startPoint.y,endPoint.x,endPoint.y).attr({
-				stroke: "#000",
-				strokeWidth: 5	
-			}); 
-			this.startPoint = endPoint; */
-			/* svg.paper.line(50, 50, 100, 100).attr({
-    stroke: "#000",
-    strokeWidth: 5	
-}); */
-		})
-		svg.touchmove((e)=>{
-			/* console.log('touch move');
-			let tmpPoint = this.getTouchPosition(e.changedTouches[0]);
-			svg.paper.line(this.startPoint.x,this.startPoint.y,tmpPoint.x,tmpPoint.y).attr({
-				stroke: "#000",
-				strokeWidth: 5	
-			}); 
-			this.startPoint = tmpPoint; 
-			console.log(tmpPoint); */
-		})
-		/* var c = svg.paper.path("M10 10L100 100").attr({
-			stroke: "#000",
-			strokeWidth: 5,
-			id:'line'
-		}); */
-		//console.log(c.getBBox());
-		//console.log(ret.getBBox());
-		/* let line = c.getBBox();
-		//console.log(svg.paper.path("M10 10 L80 0 L0 80 L-80 0"));
-		
-		let svgLine = document.querySelector('#line');
-		
+		noStream(error){alert(error)}
 
-		let lineHtml = svgLine.outerHTML;
-		svgLine.remove();
-		svg.append(Snap.fragment(lineHtml));
-		let pathList = [{path:svgLine,name:'line'}]
-		console.log(pathList) */
+		},
+	mounted(){		
+		navigator.getUserMedia=navigator.getUserMedia||navigator.webkitGetUserMedia||navigator.mozGetUserMedia||navigator.msGetUserMedia;
+
+		navigator.getUserMedia({video:true,audio: true},this.gotStream,this.noStream);//打开摄像头
 		/**@function 兼容本程序在PC浏览器上可用，最终将是375*667宽高显示 */
 		setTimeout(() => {
 			let isPC = sessionStorage.getItem('IsPC');
@@ -146,5 +71,8 @@ export default {
 	}
 	#svg{
 		position: fixed!important;
+	}
+	.weui-dialog__hd{//this.$msgbox提示框头部样式
+		padding:0;
 	}
 </style>

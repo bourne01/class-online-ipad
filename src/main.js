@@ -29,7 +29,7 @@ new Vue({
  * @param {提示信息} content 
  * @param {多少秒后自动关闭} second 
  */
-Vue.prototype.$msgbox = function(title,content,second){
+Vue.prototype.$msgbox = function(title,content,second=1000){
   this.$vux.alert.show({
     title,
     content

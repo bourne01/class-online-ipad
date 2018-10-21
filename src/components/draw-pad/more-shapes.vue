@@ -3,8 +3,8 @@
         <span
             v-for="(img,idx) in imgs" :key="idx"            
             :class="{active:imgIndex==idx}"
-            @click="onClick(idx)">
-            <img :src="img" alt="" >
+            >
+            <img :src="img" alt="" @click.stop="onClick(idx)">
         </span>
     </article>
 </template>
@@ -42,7 +42,9 @@ export default {
             this.imgIndex = index;
             this.shapeName = this.shapes[index];
             this.actIndex = index;
+            console.log(this.shapeName);
             this.$root.bus.$emit('shape',this.shapeName);
+            this.$root.bus.$emit('close-pop');
         },
     }
 }

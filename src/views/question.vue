@@ -18,7 +18,10 @@
                 <button slot="name" class="btn btn-instant" @click="onClick('instant')">即时测试</button>
             </div>            
         </testing-type>
-        <questions v-if="isShow" @close-pop="onClosePop"></questions>
+        <transition name="questions">
+            <questions v-if="isShow" @close-pop="onClosePop"></questions>
+        </transition>
+        
     </article>
 </template>
 
@@ -62,46 +65,56 @@ export default {
 
 
 <style lang="scss" scoped>
-    @function px2rem($px){
-        $rem:102.4px;
-        @return ($px / $rem) + rem; 
+        @function px2rem($px){
+            $rem:102.4px;
+            @return ($px / $rem) + rem; 
+        }
+    .question{
+        margin-top:px2rem(390px);
+        padding:0 px2rem(232px);
+        display:flex;
+        justify-content: space-between;
+        width:px2rem(1440px);
     }
-   .question{
-       margin-top:px2rem(390px);
-       padding:0 px2rem(232px);
-       display:flex;
-       justify-content: space-between;
-       width:px2rem(1440px);
-   }
-   .icon-erea{
-       width:px2rem(640px);
-        height:px2rem(480px);
-        border-radius: 4px;
-   }
-   .btn-wrapper{
-       text-align: center;
-   }
-   .btn{
-        outline: none;
-        border:none;
-        width:px2rem(252px);
-        height:px2rem(80px);
-        line-height:px2rem(80px);
+    .icon-erea{
+        width:px2rem(640px);
+            height:px2rem(480px);
+            border-radius: 4px;
+    }
+    .btn-wrapper{
         text-align: center;
-        border-radius:29px;
-        font-size:px2rem(34px); 
-        color:#fff;       
-   }
-   .in-lesson{
-        background:rgba(232,242,252,1);        
-   }
-   .instant{
-        background:rgba(232, 247, 239, 1);        
-   }
-   .btn-in-lesson{
-       background:rgba(75,120,255,1);
-   }
-   .btn-instant{
-       background:rgba(34,203,100,1);
-   }
+    }
+    .btn{
+            outline: none;
+            border:none;
+            width:px2rem(252px);
+            height:px2rem(80px);
+            line-height:px2rem(80px);
+            text-align: center;
+            border-radius:29px;
+            font-size:px2rem(34px); 
+            color:#fff;       
+    }
+    .in-lesson{
+            background:rgba(232,242,252,1);        
+    }
+    .instant{
+            background:rgba(232, 247, 239, 1);        
+    }
+    .btn-in-lesson{
+        background:rgba(75,120,255,1);
+    }
+    .btn-instant{
+        background:rgba(34,203,100,1);
+    }
+    .questions-enter-active,
+    .questions-leave-active
+    {
+        transition: opacity .5s;
+    }
+    .questions-enter,
+    .questions-leave-to
+    {
+        opacity:0;
+    }
 </style>

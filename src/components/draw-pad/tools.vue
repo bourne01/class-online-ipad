@@ -5,7 +5,10 @@
         <div>
             <img :src="require('../../assets/svg/size.svg')" alt="" 
                 @click.stop="isLineSizes=!isLineSizes">
-            <line-sizes v-if="isLineSizes"></line-sizes>
+                <transition name="line-size">
+                    <line-sizes v-if="isLineSizes"></line-sizes>
+                </transition>
+            
         </div>
     </section>
 </template>
@@ -49,5 +52,15 @@ export default {
         height:px2rem(64px);
         display: flex;
         position: relative;
+    }
+    .line-size-enter-active,
+    .line-size-leave-active
+    {
+        transition: opacity .5s;
+    }
+    .line-size-enter,
+    .line-size-leave-to
+    {
+        opacity:0;
     }
 </style>

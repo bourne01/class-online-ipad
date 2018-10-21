@@ -12,7 +12,10 @@
         <div>
             <img :src="require('../../assets/svg/caret.svg')" alt="" 
                 @click.stop="isMoreShapes=!isMoreShapes">
-            <more-shapes v-if="isMoreShapes"></more-shapes>
+                <transition name="more-shapes">
+                    <more-shapes v-if="isMoreShapes"></more-shapes>
+                </transition>
+            
         </div>
         
     </section>
@@ -76,5 +79,17 @@ export default {
         height:px2rem(64px);
         display: flex;
         position: relative;
+    }
+    .more-shapes-enter-active{
+        transition: opacity .5s;
+    }
+    .more-shapes-enter{
+        opacity:0;
+    }
+    .more-shapes-leave-to{
+        opacity:0;
+    }
+    .more-shapes-leave-active{
+        transition: opacity .5s;
     }
 </style>

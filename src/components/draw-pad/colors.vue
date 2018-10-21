@@ -3,7 +3,9 @@
         <div>
             <img :src="require('../../assets/svg/color-picker.svg')" alt=""
                 @click.stop="isMoreColors=!isMoreColors">
-            <more-colors v-if="isMoreColors"></more-colors>
+            <transition name="more-color">
+                <more-colors v-if="isMoreColors"></more-colors>
+            </transition>            
         </div>        
         <div class="current-color-wrapper">
             <div class="current-color" :style="{background:activeColor}"></div>
@@ -66,5 +68,15 @@ export default {
         border-radius:2px; 
         border:1px solid #E2E2E2;
         box-sizing:border-box;
+    }
+    .more-color-enter-active,
+    .more-color-leave-active
+    {
+        transition: opacity .5s;
+    }
+    .more-color-enter,
+    .more-color-leave-to
+    {
+        opacity:0;
     }
 </style>

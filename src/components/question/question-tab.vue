@@ -19,8 +19,7 @@
                 <span>已选&nbsp;{{5}}</span>
                 <button @click="onClick('release')">发布测试</button>
             </footer>
-        </div>
-        
+        </div>        
     </div>
 </template>
 

@@ -15,8 +15,8 @@
                 <div class="slides"></div>
                 <div class="slide-index">
                     <span>{{idx}}</span>
-                    <img src="../assets/svg/visible.svg" alt="" v-if="visibilities[idx-1]" @click="onVisibility(idx)">
-                    <img src="../assets/svg/inVisible.svg" alt="" v-else @click="onVisibility(idx)">
+                    <img :src="require('../assets/svg/visible.svg')" alt="" v-if="visibilities[idx-1]" @click="onVisibility(idx)">
+                    <img :src="require('../assets/svg/invisible.svg')" alt="" v-else @click="onVisibility(idx)">
                 </div>
             </div>
         </footer>

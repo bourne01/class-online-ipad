@@ -8,13 +8,6 @@
             <img class="history redo" src="../assets/svg/redo.svg" alt="" @click="onHistoryClick('redo')">
             <img class="history undo" src="../assets/svg/undo.svg" alt="" @click="onHistoryClick('undo')">
         </section>
-        <!-- <footer>
-            <div class="preview" v-for="idx in 15" :key="idx">{{idx}}</div>
-        </footer> -->
-        <!-- <div class="history redo"></div>
-        
-        <div class="history undo"></div> -->
-        
     </article>
 </template>
 
@@ -32,8 +25,10 @@ export default {
             color:'#000',//默认线条的颜色为黑色
             startPoint:{},//触摸开始位置
             svgLeftTop:{},//svg区域左顶点的相对于浏览器窗口的坐标值
-            historyStack:[],
+            historyStack:[],//操作历史
+            delStack:[],//被删除历史
             drawErea:null,//画图区元素对象
+            redoSteps:0,//还原步数
         }
     },
     methods:{
@@ -47,18 +42,28 @@ export default {
          * @param {动作类型} type
          */
         onHistoryClick(type){
-            if(type === 'redo'){//重做
-
-            }else{//撤销
+            let svgObj = document.querySelector("#draw-erea");
+            console.log(svgObj.children);
+            if(type === 'redo'){//还原
+                if(this.redoSteps > 0){
+                    this.historyStack.unshift(this.delStack[0]);//恢复最新删除
+                    //this.delStack = [];
+                    this.delStack.splice(0,1);//从被删除数组删除第一个元素
+                    svgObj.innerHTML = `<desc>Created with Snap</desc>
+                                        ${svgObj.children[1].outerHTML}`+this.historyStack.join();//向DOM输出
+                    this.redoSteps--;
+                }else{
+                    this.$msgbox('温馨提示','已经没有要还原的操作！',2000);
+                }
+                
+            }else{//撤销                
+                this.delStack.unshift(this.historyStack[0]);//保存最新删除的元素到被删除数组中
+                this.redoSteps = this.delStack.length;
+                console.log(this.historyStack[0]);
+                this.historyStack.splice(0,1);//删除第一个元素                
+                svgObj.innerHTML = `<desc>Created with Snap</desc>
+                                    ${svgObj.children[1].outerHTML}`+this.historyStack.join();
                 //console.log(this.historyStack)
-                /* for(let action of this.historyStack){
-                    console.log(action.outerSVG);
-                } */
-                this.historyStack.splice(0,1);//删除第一个元素
-                let svgObj = document.querySelector("#draw-erea");
-                svgObj.innerHTML = this.historyStack.join();
-                //
-                console.log(this.historyStack)
             }
         },
 
@@ -84,7 +89,139 @@ export default {
                 x:point.clientX - this.svgLeftTop.x,
                 y:point.clientY - this.svgLeftTop.y
             }
-		},
+        },
+        
+        /**
+         * @function 画等边三角形，要求上下滑动操作
+         * @param {起点坐标} sPoint
+         * @param {终点坐标} ePoint
+         * @param {画图区域} canvas
+         */
+        drawTriangle(sPoint,ePoint,canvas){
+            let height = Math.sqrt((ePoint.x - sPoint.x)*(ePoint.x - sPoint.x) + 
+                                        (ePoint.y - sPoint.y)*(ePoint.y - sPoint.y));//三角形高度
+            let sideLength = 2*Math.sqrt(3)*height/3;
+            let leftPoint = {//左顶点坐标
+                    x:(sPoint.x-sideLength/2),
+                    y:ePoint.y
+                    };
+            let rightPoint = {//右顶点坐标
+                    x:(sPoint.x+sideLength/2),
+                    y:ePoint.y
+                    };
+            let path = "M" + sPoint.x + " " + sPoint.y + " L" + leftPoint.x + " " + leftPoint.y
+                        +" L" + rightPoint.x + " " + rightPoint.y + ' z'
+            let triangle = canvas.paper.path(path);
+            triangle.attr({
+                stroke: this.color,
+                strokeWidth: this.lineSize,	
+                fill:'none'
+            })
+            this.historyStack.unshift(triangle.outerSVG());// 记录动作
+        },
+
+        /**
+         * @function 画30+60+90度的直角三角形，要求上下滑动操作
+         * @param {起点坐标，30度角} sPoint
+         * @param {终点坐标} ePoint
+         * @param {画图区域} canvas
+         */
+        drawRightAngle(sPoint,ePoint,canvas){
+            let rightAngledPoint = {//直角顶点坐标
+                    x:sPoint.x,//以起点纵坐标为准
+                    y:ePoint.y
+                    };
+            let height = Math.sqrt((rightAngledPoint.x - sPoint.x)*(rightAngledPoint.x - sPoint.x) + 
+                        (rightAngledPoint.y - sPoint.y)*(rightAngledPoint.y - sPoint.y));//直角三角形长直角边
+            let sideLength = Math.sqrt(3)*height/3;
+            
+            let degree60Point = {//60度角顶点坐标
+                    x:(sPoint.x+sideLength),
+                    y:rightAngledPoint.y
+                    };
+            let path = "M" + sPoint.x + " " + sPoint.y + " L" + rightAngledPoint.x + " " + rightAngledPoint.y
+                        +" L" + degree60Point.x + " " + degree60Point.y + ' z'
+            let triangle = canvas.paper.path(path);
+            triangle.attr({
+                stroke: this.color,
+                strokeWidth: this.lineSize,	
+                fill:'none'
+            })
+            this.historyStack.unshift(triangle.outerSVG());// 记录动作
+        },
+
+        /**
+         * @function 画带有箭头的直线
+         * @param {起点坐标} sPoint
+         * @param {终点坐标} ePoint
+         * @param {画图区域} canvas
+         * @param {直线与水平线的角度} degree
+         */
+        drawArrow(sPoint,ePoint,canvas,degree){
+            let arrowTriangle = canvas.paper.path("M2,2 L2,11 L10,6 L2,2");//画箭头三角形
+            arrowTriangle.attr({
+                fill: this.color,  
+            });
+            let makerEnd = arrowTriangle.marker(0, 0, 13, 13, 2, 6);//maker元素
+            let _ePoint = {};//线段终点坐标
+            if(degree !== 45){//画垂直于水平线的带箭头的直线
+                _ePoint = {
+                    x:sPoint.x,
+                    y:ePoint.y
+                }
+            }else{//画任意角度的带箭头的直线
+                _ePoint = ePoint;
+            }
+            let arrow = canvas.paper.line(sPoint.x,sPoint.y,_ePoint.x,_ePoint.y).attr({
+                // 描边
+                stroke: this.color,
+                strokeWidth: this.lineSize,
+                fill: "none",
+                // 起始标记
+                // 结束标记
+                "marker-end": makerEnd
+            });
+            this.historyStack.unshift(arrow.outerSVG().replace(/\\"/g,'&quot'));// 记录动作
+        },
+
+        /**
+         * @function 画上下顶角度数120度，左右60度的菱形，
+         * 动作：上下滑动，起点为菱形中心点
+         * @param {起点坐标} sPoint
+         * @param {终点坐标} ePoint
+         * @param {画图区域} canvas
+         */
+        drawDiamond(sPoint,ePoint,canvas){            
+            let topPoint = {//上顶点坐标
+                x:sPoint.x,
+                y:(ePoint.y-sPoint.y)>0?(sPoint.y-(ePoint.y-sPoint.y)):ePoint.y
+            };
+            let height = Math.sqrt((sPoint.x - topPoint.x)*(sPoint.x - topPoint.x) + 
+                        (sPoint.y - topPoint.y)*(sPoint.y - topPoint.y))//中心点到上顶点距离
+            let rightPoint = {//右顶点坐标
+                x:(sPoint.x + height*Math.sqrt(3)),
+                y:sPoint.y
+            };
+            let bottomPoint = {//下顶点坐标
+                x:sPoint.x,
+                y:(sPoint.y + height)
+            };
+            let leftPoint = {//左顶点坐标
+                x:(sPoint.x - height*Math.sqrt(3)),
+                y:sPoint.y
+            };
+
+            let diamond = canvas.paper.path("M" + topPoint.x + ' ' + topPoint.y + 
+                                            " L" + rightPoint.x + " " + rightPoint.y +
+                                            " L" + bottomPoint.x + " " + bottomPoint.y +
+                                            " L" + leftPoint.x + " " + leftPoint.y + " Z");
+            diamond.attr({
+                stroke: this.color,
+                strokeWidth: this.lineSize,
+                fill: "none", 
+            });
+            this.historyStack.unshift(diamond.outerSVG());// 记录动作
+        }
     },
     mounted(){
         /**@function 监听来自画板工具条操作
@@ -96,6 +233,7 @@ export default {
         //2、监听图形形状
         this.$root.bus.$on('shape',(shape) => {
             this.shape = shape;
+            console.log(shape)
         })
         //3、监听画图线条粗细
         this.$root.bus.$on('size',(size) => {
@@ -135,9 +273,7 @@ export default {
                             stroke: this.color,
                             strokeWidth: this.lineSize,	
                         }); 
-                        console.log(line.outerSVG());
                         this.historyStack.unshift(line.outerSVG());
-                        //this.historyStack.unshift({name:this.shape,outerSVG:JSON.stringify(line)});
                         break;
                     case 'ellipse'://椭圆
                         let radiusX = Math.abs(endPoint.x - this.startPoint.x);
@@ -173,28 +309,32 @@ export default {
                         });
                         this.historyStack.unshift(rRect.outerSVG()); 
                         break; 
+                    case 'isosceles':
+                        this.drawTriangle(this.startPoint,endPoint,svg);
+                        break;
+                    case 'right-angled-triangle':
+                        this.drawRightAngle(this.startPoint,endPoint,svg);
+                        break;
+                    case 'arrow-up':
+                        this.drawArrow(this.startPoint,endPoint,svg);
+                        break;
+                    case 'arrow-down':
+                        this.drawArrow(this.startPoint,endPoint,svg);
+                        break;
+                    case 'arrow-45-degree':
+                        this.drawArrow(this.startPoint,endPoint,svg,45);
+                        break;
+                    case 'diamond':
+                        this.drawDiamond(this.startPoint,endPoint,svg);
+                        break;
+                    default:
+                        this.$msgbox('发生错误','未知图形',2000);
                 }
             }
 			console.log('touch end');
 			//console.log(e)
 			//ret.attr('width','500px')
 			//ret.animate({r:50},500);
-			//console.log(e.changedTouches[0]);
-			//let endPoint = this.getTouchPosition(e.changedTouches[0]);
-			//let radius = Math.sqrt((endPoint.x-this.startPoint.x)*(endPoint.x-this.startPoint.x)+(endPoint.y-this.startPoint.y)*(endPoint.y-this.startPoint.y));
-			//console.log(radius);
-			//svg.paper.circle(this.startPoint.x,this.startPoint.y,radius)
-			//console.log(this.startPoint);
-			//console.log(endPoint);
-			/* svg.paper.line(this.startPoint.x,this.startPoint.y,endPoint.x,endPoint.y).attr({
-				stroke: "#000",
-				strokeWidth: 5	
-			}); 
-			this.startPoint = endPoint; */
-			/* svg.paper.line(50, 50, 100, 100).attr({
-    stroke: "#000",
-    strokeWidth: 5	
-}); */
         })
         /**@function 监听触摸移动事件 */
 		svg.touchmove((e)=>{
@@ -207,7 +347,6 @@ export default {
                     strokeWidth: this.lineSize,	
                 }); 
                 this.startPoint = tmpPoint; 
-                console.log(tmpPoint);
                 this.historyStack.unshift(curve.outerSVG()); 
             }
 			
